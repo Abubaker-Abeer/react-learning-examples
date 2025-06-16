@@ -1,34 +1,51 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom'; 
+import { Routes, Route, createBrowserRouter, RouterProvider } from 'react-router-dom'; 
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import Root from './assets/Root';
+import UserContextProvider from './components/context/User';
+import { ToastContainer } from 'react-toastify';
 export default function App() {
-const [isLogin, setIsLogin] = useState(localStorage.getItem("userToken") ? true : false);
-  const navigate = useNavigate();
+//const [isLogin, setIsLogin] = useState(localStorage.getItem("userToken") ? true : false);
 
-function handleLogout() {
+/*function handleLogout() {
   localStorage.removeItem("userToken");
   setIsLogin(false);
   navigate('/login')
-}
+}*/
+  const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root /*isLogin={isLogin} setIsLogin={setIsLogin}*//>,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: 'login',
+        element: <Login /*setIsLogin={setIsLogin}*/ />
+      },
+      {
+        path: 'register',
+        element:
+         <Register />
+
+      },
+    ],
+  },
+]);
+
   return (
-    <>
-     <Navbar isLogin={isLogin}handleLogout={handleLogout} />
+    <UserContextProvider>
+           <RouterProvider router={router}/> 
+           <ToastContainer position="top-right" autoClose={3000} />
 
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login setIsLogin={setIsLogin} />} />
+    </UserContextProvider>
 
-
-        <Route path='/register' element={<Register />} />
-
-        <Route path='*' element={<h2>Page Not Found</h2>} />
-      </Routes>
-    </>
   );
 }
