@@ -10,3 +10,11 @@ This repository contains various learning modules and mini-projects related to w
 - `json-server/`: Fake backend setup using `json-server` for local API testing.
 - `project1/send-data-to-api/`: A practical project that sends product data to an API and displays it on the homepage.
 
+## ✅ Goal
+
+The main goal of this repository is to practice and improve skills in:
+
+- Handling form data
+- Validating forms
+- Sending data to APIs
+- Using tools like `Formik`, `json-server`, and more
